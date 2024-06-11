@@ -1,3 +1,4 @@
+document.getElementById("ejecutarBtn2").addEventListener("click", function() {
 class Pelicula{
     constructor(nombre,formato,costo_entrada,butacas){
         this.nombre = nombre
@@ -58,6 +59,8 @@ function seleccionPelicula(){
 }
 
 let resultado_compra = seleccionPelicula()
-console.log(`Pelicula seleccionada: ${resultado_compra.pelicula.nombre}
+alert(`Pelicula seleccionada: ${resultado_compra.pelicula.nombre}
      Candidad de entradas: ${resultado_compra.cantidad_entradas}
      Costo total: ${resultado_compra.costo_total}`)
+
+})

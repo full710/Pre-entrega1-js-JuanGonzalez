@@ -1,5 +1,4 @@
-document.getElementById("ejecutarBtn").addEventListener("click", function() {
-
+document.getElementById("ejecutarBtn1").addEventListener("click", function() {
 
 function comprarEntradas() {
     console.log('Opción 1: Comprar tickets para películas')
