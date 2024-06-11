@@ -1,4 +1,6 @@
 document.getElementById("ejecutarBtn").addEventListener("click", function() {
+
+
 function comprarEntradas() {
     console.log('Opción 1: Comprar tickets para películas')
     console.log('Opción 1: 2D (valor $3500)')
