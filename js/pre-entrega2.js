@@ -93,33 +93,28 @@ const finalizarCompra = (resultado_compra, costo_descuento) =>{
             return reiniciar = true
         }else {
             alert('Que disfrute de su pelicula!!')
+            finalizar = false
             return reiniciar = false
-
         }
     }else{
         alert(`Compra no realizada`)
-        finalizar = false
+        finalizar = true
     }
 }
 
 let resultado_compra = null
 let costo_descuento = null
 let reiniciar
-let finalizar = false
-let cancelar = false
+let finalizar = true
 
-do {
-    console.log('1- Seleccionar pelicula')
-    console.log('2- Aplicar descuento')
-    console.log('3- Finalizar compra')
-    console.log('4- Cancelar compra')
+
+while (finalizar){
+    console.log(`    1- Seleccionar pelicula
+    2- Aplicar descuento
+    3- Finalizar compra
+    4- Cancelar compra`);
 
     let menu_select = Number(prompt('Seleccionar menú: '))
-    while ((isNaN(menu_select) || (menu_select < 1 || menu_select > 4))) {
-        alert('Selección no válida. Por favor, ingrese un número entre 1 y 4.')
-        menu_select = Number(prompt('Seleccionar menú'))
-    }
-
     switch (menu_select) {
         case 1:
             resultado_compra = seleccionPelicula()
@@ -138,7 +133,7 @@ do {
                     resultado_compra = null
                     costo_descuento = null
                 }else{
-                finalizar = true
+                finalizar = false
                 }
             } else {
                 alert('Debe completar todas las etapas antes de finalizar la compra.')
@@ -146,11 +141,13 @@ do {
             break;
         case 4:
             console.log('Compra cancelada.')
-            cancelar = true
+            finalizar = false
+            break
+        default:
+            alert('Selección no válida. Por favor, ingrese un número entre 1 y 4.')
             break
     }
-} while (!finalizar && !cancelar)
-
+}
 
 
 })
