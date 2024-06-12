@@ -10,10 +10,16 @@ class Pelicula{
         let costo_total
         if (this.butacas >= cantidad) {
             this.butacas -= cantidad
-            costo_total = cantidad * this.costo_entrada
-            console.log(`Compra añadida con exito. ${cantidad} butacas reservadas para ${this.nombre}. Costo total de la compra: ${costo_total}`)
+            if (confirm(`${cantidad} butacas reservadas para ${this.nombre}. Costo total de la compra: ${costo_total}
+                Añadir al carrito?`)){
+                console.log(`Compra añadida con exito`)
+                costo_total = cantidad * this.costo_entrada
+            }else{
+                console.log(`Compra cancelada`)
+                costo_total = null
+            }
         } else {
-            console.log(`Compra fallida. No hay suficientes butacas disponibles para ${this.nombre}. Butacas disponibles: ${cantidad}`)
+            alert(`Compra fallida. No hay suficientes butacas disponibles para ${this.nombre}. Butacas disponibles: ${this.butacas}`)
         }
         return costo_total
     }
@@ -28,22 +34,22 @@ peliculas.push(new Pelicula('Kung Fu Panda 4','3D',4100,50))
 peliculas.push(new Pelicula('Garfield: Fuera de casa', '3D',4100,35))
 
 
-function seleccionPelicula(){
+const seleccionPelicula = () => {
     peliculas.forEach((pelicula, indice) => {
-        console.log(`${indice+1}: ${pelicula.nombre}, 
+        console.log(`${indice + 1}: ${pelicula.nombre}, 
             Formato: ${pelicula.formato}, 
             Costo de entrada: ${pelicula.costo_entrada}`)
-        })
+    })
     let elegir_pelicula = Number(prompt('Seleccionar pelicula:'))
-
-    while ((isNaN(elegir_pelicula) || (elegir_pelicula < 1 || elegir_pelicula >= peliculas.length))) {
+    while (isNaN(elegir_pelicula) || (elegir_pelicula < 1 || elegir_pelicula > peliculas.length)) {
         alert('Selección no válida. Por favor, ingrese una opción válida.')
-        elegir_pelicula = Number(prompt('Seleccione el tipo de película:'))
+        elegir_pelicula = Number(prompt('Seleccionar pelicula:'))
     }
 
-    console.log(`Pelicula seleccionada: ${peliculas[elegir_pelicula].nombre}, 
-        Formato: ${peliculas[elegir_pelicula].formato}, 
-        Costo de entrada: ${peliculas[elegir_pelicula].costo_entrada}`)
+    console.log(`Pelicula seleccionada: ${peliculas[elegir_pelicula - 1].nombre}, 
+        Formato: ${peliculas[elegir_pelicula - 1].formato}, 
+        Costo de entrada: ${peliculas[elegir_pelicula - 1].costo_entrada}
+        Butacas disponibles: ${peliculas[elegir_pelicula - 1].butacas}`)
 
     elegir_pelicula -= 1
     let cantidad_entradas = Number(prompt('¿Cuántas entradas desea comprar?'))
@@ -52,15 +58,99 @@ function seleccionPelicula(){
         alert('Cantidad no válida. Por favor, ingrese una cantidad válida.')
         cantidad_entradas = Number(prompt('¿Cuántas entradas desea comprar?'))
     }
-
+    
     let costo_total = peliculas[elegir_pelicula].comprarEntrada(cantidad_entradas)
-    return { pelicula: peliculas[elegir_pelicula], costo_total: costo_total, cantidad_entradas:cantidad_entradas }
-
+    return { pelicula: peliculas[elegir_pelicula], costo_total: costo_total, cantidad_entradas: cantidad_entradas }
 }
 
-let resultado_compra = seleccionPelicula()
-alert(`Pelicula seleccionada: ${resultado_compra.pelicula.nombre}
-     Candidad de entradas: ${resultado_compra.cantidad_entradas}
-     Costo total: ${resultado_compra.costo_total}`)
+
+const aplicarDescuento = (resultado_compra) => {
+    console.log('Aplicar descuento')
+    let costo_total_descuento
+    
+    if (resultado_compra.costo_total > 10000) {
+        costo_total_descuento = resultado_compra.costo_total * 0.8
+        alert(`Precio final con descuento ${costo_total_descuento}`)
+    } else {
+        costo_total_descuento = resultado_compra.costo_total
+        alert(`No se aplica descuento, costo final ${costo_total_descuento}`)
+    }
+
+    return { costo_total_descuento }
+}
+
+const finalizarCompra = (resultado_compra, costo_descuento) =>{
+    alert(`Resumen de la compra:
+        Pelicula seleccionada: ${resultado_compra.pelicula.nombre}
+        Formato: ${resultado_compra.pelicula.formato}
+        Costo entrada: ${resultado_compra.pelicula.costo_entrada}
+        Cantidad de entradas:${resultado_compra.cantidad_entradas}
+        Costo total:${resultado_compra.costo_total}
+        Descuento aplicado:${costo_descuento.costo_total_descuento}`)
+    if (confirm(`Desea confirmar la compra?`)){
+        alert(`Compra realizada con exito`)
+        if (confirm('Desea realizar otra compra?')){
+            return reiniciar = true
+        }else {
+            alert('Que disfrute de su pelicula!!')
+            return reiniciar = false
+
+        }
+    }else{
+        alert(`Compra no realizada`)
+        finalizar = false
+    }
+}
+
+let resultado_compra = null
+let costo_descuento = null
+let reiniciar
+let finalizar = false
+let cancelar = false
+
+do {
+    console.log('1- Seleccionar pelicula')
+    console.log('2- Aplicar descuento')
+    console.log('3- Finalizar compra')
+    console.log('4- Cancelar compra')
+
+    let menu_select = Number(prompt('Seleccionar menú: '))
+    while ((isNaN(menu_select) || (menu_select < 1 || menu_select > 4))) {
+        alert('Selección no válida. Por favor, ingrese un número entre 1 y 4.')
+        menu_select = Number(prompt('Seleccionar menú'))
+    }
+
+    switch (menu_select) {
+        case 1:
+            resultado_compra = seleccionPelicula()
+            break
+        case 2:
+            if (resultado_compra && resultado_compra.costo_total !== null){
+                costo_descuento = aplicarDescuento(resultado_compra)
+            } else {
+                alert('No hay compras añadidas. Elija una pelicula y la cantidad de entradas para poder realizar el descuento correspondiente')
+            }
+            break
+        case 3:
+            if (resultado_compra && costo_descuento) {
+                finalizarCompra(resultado_compra, costo_descuento)
+                if(reiniciar = true){
+                    resultado_compra = null
+                    costo_descuento = null
+                }else{
+                finalizar = true
+                }
+            } else {
+                alert('Debe completar todas las etapas antes de finalizar la compra.')
+            }
+            break;
+        case 4:
+            console.log('Compra cancelada.')
+            cancelar = true
+            break
+    }
+} while (!finalizar && !cancelar)
+
+
 
 })
