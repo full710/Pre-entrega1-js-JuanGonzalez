@@ -4,28 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre-Entregas || Juan Gonzalez</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <h1>Juan Gonzalez</h1>
-    <div>
+    <div class="entregas-consola">
         <div>
-            <button id="ejecutarBtn1"><h2>Pre-Entrega n°1</h2></button> 
+            <div>
+                <button id="ejecutarBtn1"><h2>Pre-Entrega n°1</h2></button> 
+            </div>
+            <div>
+                <button id="ejecutarBtn2"><h2>Pre-Entrega n°2</h2></button>
+            </div>
         </div>
-        <div>
-            <button id="ejecutarBtn2"><h2>Pre-Entrega n°2</h2></button>
+        <div class="guia"> 
+            <ul>1 - Abre tu navegador web</ul>
+            <ul>2 - Haz clic derecho en cualquier parte de la página y selecciona "Inspeccionar"</ul>
+            <ul>3 - Dirígete a la pestaña "Consola".</ul>
+            <ul>4 - Ahora ya puedes presionar los botones para iniciar</ul>
         </div>
     </div>
-    <div class="guia"> 
-        <ul>1 - Abre tu navegador web</ul>
-        <ul>2 - Haz clic derecho en cualquier parte de la página y selecciona "Inspeccionar"</ul>
-        <ul>3 - Dirígete a la pestaña "Consola".</ul>
-        <ul>4 - Ahora ya puedes presionar los botones para iniciar</ul>
+    <div class="cine-app">
+        <div>
+            <div>
+                <button id="ejecutarBtn3"><h2>Pre-Entrega n°3</h2></button>
+            </div>
+            <div>
+                <button class="borrarDatosStorage" id="borrarDatosStorage"><h2>Borrar datos Storage</h2></button>
+            </div>
+        </div>
+        <div class="guia">
+            <ul>
+                Esta Pre-entrega no se requiere el uso de consola.
+                Al presionar este boton se te redirigira a una cartelera de cine, simulando una compra de entradas. Podras elegir las butacas y realizar la compra.
+                Los datos quedaran guardados en localStorage para que no se pueda volver a elegir la misma butaca en la pelicula seleccionada.
+                Recomiento una vez finalizado el uso de la cine app, dar al boton de "Borrar datos Storage" para elimar los datos indicados
+            </ul>
+        </div>
     </div>
         
 
 
     <script src="./js/pre-entrega2.js"></script>
     <script src="./js/pre-entrega.js"></script>
+    <script src="./js/pre-entrega3.js"></script>
 </body>
 </html>
